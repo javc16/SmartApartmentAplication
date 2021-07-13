@@ -38,7 +38,7 @@ namespace SmartApartmentAplication.Features.Mgmt
         public async Task<Response> Post(mgmtHeaderDTO mgmtHeaderDTO)
         {
 
-            var SavedMgmt = await _context.mgmtHeader.FirstOrDefaultAsync(r => r.mgmt.name == mgmtHeaderDTO.mgmt.name);
+            var SavedMgmt = await _context.mgmtHeader.FirstOrDefaultAsync(r => r.mgmt.name == mgmtHeaderDTO.mgmt.name && r.mgmt.mgmtID == mgmtHeaderDTO.mgmt.mgmtID);
             if (SavedMgmt != null)
             {
                 return new Response { message = "This mgmt already exists in our system" };
