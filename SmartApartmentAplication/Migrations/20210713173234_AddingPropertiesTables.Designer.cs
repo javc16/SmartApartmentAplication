@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartApartmentAplication.MyContext;
 
 namespace SmartApartmentAplication.Migrations
 {
     [DbContext(typeof(SmartApartmentContext))]
-    partial class SmartApartmentContextModelSnapshot : ModelSnapshot
+    [Migration("20210713173234_AddingPropertiesTables")]
+    partial class AddingPropertiesTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,68 +68,6 @@ namespace SmartApartmentAplication.Migrations
                     b.ToTable("mgmtHeader");
                 });
 
-            modelBuilder.Entity("SmartApartmentAplication.Features.Property.propertyDetail", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("city")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("formerName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("isActive")
-                        .HasColumnType("int");
-
-                    b.Property<float>("lat")
-                        .HasColumnType("real");
-
-                    b.Property<float>("lng")
-                        .HasColumnType("real");
-
-                    b.Property<string>("market")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("propertyID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("state")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("streetAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("propertyDetail");
-                });
-
-            modelBuilder.Entity("SmartApartmentAplication.Features.Property.propertyHeader", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("isActive")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("propertyid")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("propertyid");
-
-                    b.ToTable("propertyHeader");
-                });
-
             modelBuilder.Entity("SmartApartmentAplication.Features.Mgmt.mgmtHeader", b =>
                 {
                     b.HasOne("SmartApartmentAplication.Features.Mgmt.mgmtDetail", "mgmt")
@@ -135,15 +75,6 @@ namespace SmartApartmentAplication.Migrations
                         .HasForeignKey("mgmtid");
 
                     b.Navigation("mgmt");
-                });
-
-            modelBuilder.Entity("SmartApartmentAplication.Features.Property.propertyHeader", b =>
-                {
-                    b.HasOne("SmartApartmentAplication.Features.Property.propertyDetail", "property")
-                        .WithMany()
-                        .HasForeignKey("propertyid");
-
-                    b.Navigation("property");
                 });
 #pragma warning restore 612, 618
         }

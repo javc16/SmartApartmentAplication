@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartApartmentAplication.Features.Mgmt;
+using SmartApartmentAplication.Features.Property;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace SmartApartmentAplication.MyContext
 
         public DbSet<mgmtHeader> mgmtHeader { get; set; }
         public DbSet<mgmtDetail> mgmtDetail { get; set; }
+        public DbSet<propertyHeader> propertyHeader { get; set; }
+        public DbSet<propertyDetail> propertyDetail { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {            

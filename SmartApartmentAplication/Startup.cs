@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SmartApartmentAplication.Features.Mgmt;
+using SmartApartmentAplication.Features.Property;
 using SmartApartmentAplication.MyContext;
 
 namespace SmartApartmentAplication
@@ -53,7 +54,7 @@ namespace SmartApartmentAplication
              options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
 
             services.AddScoped<mgmtService>();
-            //services.AddScoped<INativeCityService, NativeCityService>();
+            services.AddScoped<PropertyService>();
 
             services.AddControllersWithViews()
             .AddNewtonsoftJson(options =>

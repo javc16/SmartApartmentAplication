@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartApartmentAplication.MyContext;
 
 namespace SmartApartmentAplication.Migrations
 {
     [DbContext(typeof(SmartApartmentContext))]
-    partial class SmartApartmentContextModelSnapshot : ModelSnapshot
+    [Migration("20210713173330_AddingPropertiesTables2")]
+    partial class AddingPropertiesTables2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
