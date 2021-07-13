@@ -19,33 +19,27 @@ namespace SmartApartmentAplication.Features.Mgmt
         }
 
         [HttpGet]
-        public  ActionResult<IEnumerable<mgmtHeader>> GetAll()
+        public  ActionResult<IEnumerable<mgmtHeaderDTO>> GetAll()
         {
             return Ok(_mgmtService.GetAll());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<mgmtHeader>> GetById(long id)
+        public async Task<ActionResult<mgmtHeaderDTO>> GetById(long id)
         {
             return Ok(await _mgmtService.GetById(id));
         }
 
         [HttpPost]
-        public async Task<ActionResult<mgmtHeader>> Post(mgmtHeader item)
+        public async Task<ActionResult<mgmtHeaderDTO>> Post(mgmtHeaderDTO item)
         {
             return Ok(await _mgmtService.Post(item));
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<mgmtHeader>> PutCiudadano(int id, mgmtHeader item)
+        [HttpPost("multiple")]
+        public async Task<ActionResult<mgmtHeaderDTO>> PostAll(List<mgmtHeaderDTO> item)
         {
-            return Ok(await _mgmtService.Put(item));
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<mgmtHeader>> DeleteById(int id)
-        {
-            return Ok(await _mgmtService.Delete(id));
+            return Ok(await _mgmtService.Post(item));
         }
     }
 }

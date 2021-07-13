@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartApartmentAplication.Helpers;
 using SmartApartmentAplication.MyContext;
-using SmartApartmentAplication.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,59 +11,53 @@ namespace SmartApartmentAplication.Features.Mgmt
     public class mgmtService
     {
         private readonly SmartApartmentContext _context;
-        
+
         public mgmtService(SmartApartmentContext context)
         {
             _context = context;
         }
 
-        public  IEnumerable<mgmtHeader> GetAll()
+        public IEnumerable<mgmtHeaderDTO> GetAll()
         {
-            return  _context.mgmtHeader.Include(x=>x.mgmt).Where(x=>x.isActive == Constants.Active);
+            var data = _context.mgmtHeader.Include(x => x.mgmt).Where(x => x.isActive == Constants.Active);
+            return mgmtHeaderDTO.FromModelToDTO(data);
         }
 
         public async Task<Response> GetById(long id)
         {
-            var mgmt = await _context.mgmtHeader.Include(e => e.mgmt).FirstOrDefaultAsync(r => r.id == id  && r.isActive == Constants.Active);
+            var mgmt = await _context.mgmtHeader.Include(e => e.mgmt).FirstOrDefaultAsync(r => r.id == id && r.isActive == Constants.Active);
             if (mgmt == null)
             {
                 return new Response { message = "mgmt not exists" };
             }
 
-            return new Response { data = mgmt };
+
+            return new Response { data = mgmtHeaderDTO.FromModelToDTO(mgmt) };
         }
 
-        public async Task<Response> Post(mgmtHeader mgmtHeader)
+        public async Task<Response> Post(mgmtHeaderDTO mgmtHeaderDTO)
         {
-     
-            var SavedMgmt = await _context.mgmtHeader.FirstOrDefaultAsync(r => r.id == mgmtHeader.id);
+
+            var SavedMgmt = await _context.mgmtHeader.FirstOrDefaultAsync(r => r.mgmt.name == mgmtHeaderDTO.mgmt.name);
             if (SavedMgmt != null)
             {
                 return new Response { message = "This mgmt already exists in our system" };
-            }           
-            _context.mgmtHeader.Add(mgmtHeader);
+            }
+
+            _context.mgmtHeader.Add(mgmtHeaderDTO.FromDTOToModel(mgmtHeaderDTO));
             await _context.SaveChangesAsync();
             return new Response { message = "Added sucefully" };
         }
 
-        public async Task<Response> Put(mgmtHeader mgmtHeader)
-        {           
-            _context.Entry(mgmtHeader).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return new Response { message = "Information modified sucefully" };
-        }
-
-        public async Task<Response> Delete(int id)
+        public async Task<List<Response>> Post(IEnumerable<mgmtHeaderDTO> items)
         {
-            var mgmt = await _context.mgmtHeader.FindAsync(id);
-            if (mgmt == null)
+            List<Response> responses = new List<Response>();
+            foreach (var item in items)
             {
-                return new Response { message = "No have a mgmt with this id" };
+                responses.Add(await Post(item));
             }
-            mgmt.isActive = Constants.Inactive;
-            _context.Entry(mgmt).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return new Response { message = $"Mgmt {mgmt.mgmt.name} deleted correctly" };
+
+            return responses;
         }
     }
 }

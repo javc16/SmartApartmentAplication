@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartApartmentAplication.MyContext;
 
 namespace SmartApartmentAplication.Migrations
 {
     [DbContext(typeof(SmartApartmentContext))]
-    partial class SmartApartmentContextModelSnapshot : ModelSnapshot
+    [Migration("20210713134335_AddingIsActiveFields")]
+    partial class AddingIsActiveFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,9 +33,6 @@ namespace SmartApartmentAplication.Migrations
 
                     b.Property<string>("market")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("mgmtID")
-                        .HasColumnType("int");
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");

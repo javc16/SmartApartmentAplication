@@ -15,11 +15,10 @@ namespace SmartApartmentAplication.Features.Mgmt
         {
             private readonly mgmtHeader _mgmtHeader;
 
-            public Builder(int id, mgmtDetail mgmt)
+            public Builder(mgmtDetail mgmt)
             {
                 _mgmtHeader = new mgmtHeader
-                {
-                    id = id,
+                {                   
                     mgmt = mgmt,
                     isActive =1
                 };
